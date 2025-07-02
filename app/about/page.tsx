@@ -1,373 +1,413 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useState } from "react"
-import {
-  User,
-  MapPin,
-  Calendar,
-  GraduationCap,
-  Briefcase,
-  Award,
-  Code,
-  Heart,
-  Coffee,
-  Music,
-  Download,
-  Eye,
-} from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Progress } from "@/components/ui/progress"
+import { Code2, Award, BookOpen, Users, Download, Calendar, MapPin, Mail, Phone, Linkedin, Github } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
+import GradientBackground from "@/components/ui/gradient-background"
+import Image from "next/image"
+
+const personalInfo = {
+  ar: {
+    name: "أحمد فايز",
+    title: "مطور برمجيات محترف",
+    bio: "مطور برمجيات شغوف بأكثر من 3 سنوات من الخبرة في تطوير التطبيقات والمواقع الإلكترونية. أتخصص في تقنيات الويب الحديثة وتطوير تطبيقات الهاتف المحمول. أسعى دائماً لتقديم حلول برمجية مبتكرة وعالية الجودة.",
+    location: "السودان، الخرطوم",
+    experience: "3+ سنوات",
+    projects: "15+ مشروع",
+  },
+  en: {
+    name: "Ahmed Faiz",
+    title: "Professional Software Developer",
+    bio: "Passionate software developer with over 3 years of experience in developing applications and websites. I specialize in modern web technologies and mobile app development. I always strive to deliver innovative and high-quality software solutions.",
+    location: "Sudan, Khartoum",
+    experience: "3+ Years",
+    projects: "15+ Projects",
+  },
+}
+
+const skills = [
+  { name: "JavaScript & TypeScript", level: 95, category: "Frontend" },
+  { name: "React & Next.js", level: 92, category: "Frontend" },
+  { name: "React Native", level: 88, category: "Mobile" },
+  { name: "Node.js & Express", level: 85, category: "Backend" },
+  { name: "Python & Django", level: 80, category: "Backend" },
+  { name: "PHP & Laravel", level: 82, category: "Backend" },
+  { name: "MongoDB & MySQL", level: 78, category: "Database" },
+  { name: "Firebase", level: 85, category: "Database" },
+  { name: "Git & GitHub", level: 90, category: "Tools" },
+  { name: "Docker", level: 75, category: "Tools" },
+]
+
+const experience = [
+  {
+    title: { ar: "مطور Full Stack", en: "Full Stack Developer" },
+    company: "Freelance",
+    period: "2022 - Present",
+    description: {
+      ar: "تطوير تطبيقات ويب ومحمول متكاملة للعملاء باستخدام أحدث التقنيات",
+      en: "Developing comprehensive web and mobile applications for clients using the latest technologies",
+    },
+    technologies: ["React", "Node.js", "React Native", "Firebase"],
+  },
+  {
+    title: { ar: "مطور ويب", en: "Web Developer" },
+    company: "Tech Solutions",
+    period: "2021 - 2022",
+    description: {
+      ar: "تطوير وصيانة مواقع إلكترونية ديناميكية وتطبيقات ويب تفاعلية",
+      en: "Developing and maintaining dynamic websites and interactive web applications",
+    },
+    technologies: ["PHP", "Laravel", "MySQL", "Bootstrap"],
+  },
+]
+
+const education = [
+  {
+    degree: { ar: "بكالوريوس علوم الحاسوب", en: "Bachelor of Computer Science" },
+    school: { ar: "جامعة السودان للعلوم والتكنولوجيا", en: "Sudan University of Science & Technology" },
+    period: "2018 - 2022",
+    gpa: "3.8/4.0",
+  },
+]
+
+const certifications = [
+  {
+    name: "React Developer Certification",
+    issuer: "Meta",
+    date: "2023",
+  },
+  {
+    name: "AWS Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    date: "2023",
+  },
+  {
+    name: "Mobile App Development",
+    issuer: "Google",
+    date: "2022",
+  },
+]
 
 export default function AboutPage() {
-  const { t, language } = useLanguage()
-  const [activeTab, setActiveTab] = useState("about")
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  }
-
-  const experiences = [
-    {
-      title: language === "ar" ? "مطور تطبيقات فلوتر" : "Flutter Developer",
-      company: language === "ar" ? "مستقل" : "Freelance",
-      period: "2019 - " + (language === "ar" ? "الحاضر" : "Present"),
-      description:
-        language === "ar"
-          ? "تطوير تطبيقات الهاتف المحمول باستخدام Flutter وDart مع التكامل مع Firebase"
-          : "Developing mobile applications using Flutter and Dart with Firebase integration",
-      skills: ["Flutter", "Dart", "Firebase", "Android", "iOS"],
-    },
-    {
-      title: language === "ar" ? "مطور ويب - Laravel" : "Web Developer - Laravel",
-      company: language === "ar" ? "مستقل" : "Freelance",
-      period: "2018 - " + (language === "ar" ? "الحاضر" : "Present"),
-      description:
-        language === "ar"
-          ? "تطوير مواقع ومنصات ويب باستخدام Laravel و PHP مع قواعد بيانات MySQL"
-          : "Developing websites and web platforms using Laravel and PHP with MySQL databases",
-      skills: ["Laravel", "PHP", "MySQL", "Vue.js", "Bootstrap"],
-    },
-  ]
-
-  const education = [
-    {
-      degree: language === "ar" ? "بكالوريوس هندسة الحاسوب" : "Bachelor of Computer Engineering",
-      school: language === "ar" ? "جامعة صنعاء" : "Sana'a University",
-      period: "2015 - 2020",
-      grade: language === "ar" ? "امتياز" : "Excellent",
-      description:
-        language === "ar"
-          ? "تخصص في هندسة الحاسوب والبرمجة مع التركيز على تطوير البرمجيات"
-          : "Specialized in Computer Engineering and Programming with focus on software development",
-    },
-  ]
-
-  const achievements = [
-    {
-      title: language === "ar" ? "منصة إتجر للتجارة الإلكترونية" : "Etjer E-commerce Platform",
-      description:
-        language === "ar"
-          ? "تطوير منصة متكاملة للتجارة الإلكترونية للتجار اليمنيين"
-          : "Developed integrated e-commerce platform for Yemeni merchants",
-      year: "2023",
-      icon: Award,
-    },
-    {
-      title: language === "ar" ? "نظام عداد المياه والكهرباء" : "Water & Electricity Meter System",
-      description:
-        language === "ar"
-          ? "تطوير نظام محاسبي متكامل لإدارة العملاء والحسابات"
-          : "Developed integrated accounting system for customer and account management",
-      year: "2022",
-      icon: Code,
-    },
-    {
-      title: language === "ar" ? "مطور مستقل محترف" : "Professional Freelance Developer",
-      description:
-        language === "ar"
-          ? "خبرة أكثر من 5 سنوات في تطوير التطبيقات والمواقع"
-          : "Over 5 years of experience in application and website development",
-      year: "2019-2024",
-      icon: Briefcase,
-    },
-  ]
-
-  const interests = [
-    { name: language === "ar" ? "البرمجة" : "Programming", icon: Code },
-    { name: language === "ar" ? "القهوة" : "Coffee", icon: Coffee },
-    { name: language === "ar" ? "الموسيقى" : "Music", icon: Music },
-    { name: language === "ar" ? "التعلم" : "Learning", icon: Heart },
-  ]
+  const { language, t } = useLanguage()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-20">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <div className="min-h-screen relative">
+      <GradientBackground />
+
+      <div className="relative z-10 container mx-auto px-4 py-16">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-            <div className="relative flex-shrink-0">
-              <Image
-                src="/images/ahmed-faiz-profile.jpg"
-                alt="Ahmed Faiz"
-                width={200}
-                height={200}
-                className="rounded-full border-4 border-purple-500/30 shadow-2xl"
-                priority
-              />
-              <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-green-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-full"></div>
-              </div>
-            </div>
-
-            <div className="text-center md:text-right flex-1">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">{t("aboutTitle")}</h1>
-              <p className="text-xl text-purple-300 mb-4">{t("title")}</p>
-
-              <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-300 mb-6">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5" />
-                  <span>{t("location")}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  <span>{language === "ar" ? "29 سنة" : "29 years old"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  <span>{language === "ar" ? "مطور برمجيات" : "Software Developer"}</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                  asChild
-                >
-                  <a href="/cv-ahmed-faiz.pdf" download>
-                    <Download className="w-5 h-5 mr-2" />
-                    {t("downloadCV")}
-                  </a>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white bg-transparent"
-                  asChild
-                >
-                  <a href="/projects">
-                    <Eye className="w-5 h-5 mr-2" />
-                    {t("viewProjects")}
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            {t("about")}
+          </h1>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            {language === "ar"
+              ? "تعرف عليّ أكثر، خبراتي، مهاراتي، والرحلة التقنية التي أخوضها"
+              : "Get to know me better, my experiences, skills, and the technical journey I'm on"}
+          </p>
         </motion.div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 w-full max-w-2xl mx-auto mb-12 bg-white/10 backdrop-blur-lg border border-purple-500/20">
-            <TabsTrigger
-              value="about"
-              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-300"
-            >
-              {t("about")}
-            </TabsTrigger>
-            <TabsTrigger
-              value="experience"
-              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-300"
-            >
-              {t("experience")}
-            </TabsTrigger>
-            <TabsTrigger
-              value="education"
-              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-300"
-            >
-              {t("education")}
-            </TabsTrigger>
-            <TabsTrigger
-              value="achievements"
-              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-300"
-            >
-              {t("achievements")}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="about">
+        {/* Personal Info Section */}
+        <section className="mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Profile Card */}
             <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="grid md:grid-cols-2 gap-8"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-1"
             >
-              <motion.div variants={itemVariants}>
-                <Card className="bg-white/10 backdrop-blur-lg border-purple-500/20 h-full">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
-                      <User className="w-6 h-6 text-purple-400" />
-                      {t("personalInfo")}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4 text-gray-300">
-                    <p className="leading-relaxed">
-                      {language === "ar"
-                        ? "مطور برمجيات شغوف بخبرة أكثر من 5 سنوات في تطوير التطبيقات والمواقع الإلكترونية. أتخصص في تطوير تطبيقات الهاتف المحمول باستخدام Flutter ومواقع الويب باستخدام Laravel."
-                        : "Passionate software developer with over 5 years of experience in developing applications and websites. I specialize in mobile app development using Flutter and web development using Laravel."}
-                    </p>
-                    <p className="leading-relaxed">
-                      {language === "ar"
-                        ? "أؤمن بأن التكنولوجيا يمكنها تحسين حياة الناس، ولذلك أسعى دائماً لتطوير حلول برمجية مبتكرة وعملية تلبي احتياجات المستخدمين."
-                        : "I believe that technology can improve people's lives, so I always strive to develop innovative and practical software solutions that meet users' needs."}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Card className="bg-white/10 backdrop-blur-lg border-purple-500/20 h-full">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
-                      <Heart className="w-6 h-6 text-purple-400" />
-                      {t("interests")}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-2 gap-4">
-                      {interests.map((interest, index) => (
-                        <div
-                          key={interest.name}
-                          className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-purple-500/10"
-                        >
-                          <interest.icon className="w-5 h-5 text-purple-400" />
-                          <span className="text-gray-300">{interest.name}</span>
+              <Card className="bg-white/5 backdrop-blur-lg border-white/10 overflow-hidden">
+                <div className="relative">
+                  <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                  <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
+                    <div className="w-32 h-32 relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full p-1">
+                        <div className="w-full h-full bg-gray-900 rounded-full overflow-hidden">
+                          <Image src="/images/ahmed-faiz-profile.jpg" alt="Ahmed Faiz" fill className="object-cover" />
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </motion.div>
-          </TabsContent>
-
-          <TabsContent value="experience">
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
-              {experiences.map((exp, index) => (
-                <motion.div key={index} variants={itemVariants}>
-                  <Card className="bg-white/10 backdrop-blur-lg border-purple-500/20">
-                    <CardContent className="p-6">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold text-white mb-1">{exp.title}</h3>
-                          <p className="text-purple-300 font-medium">{exp.company}</p>
-                        </div>
-                        <Badge variant="secondary" className="bg-purple-600/20 text-purple-300 w-fit">
-                          {exp.period}
-                        </Badge>
                       </div>
-                      <p className="text-gray-300 mb-4 leading-relaxed">{exp.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.skills.map((skill) => (
-                          <Badge key={skill} variant="outline" className="border-purple-500/30 text-purple-300">
-                            {skill}
+                      <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-400 rounded-full border-4 border-gray-900"></div>
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="pt-20 pb-6 text-center">
+                  <h2 className="text-2xl font-bold text-white mb-2">{personalInfo[language].name}</h2>
+                  <p className="text-blue-400 mb-4">{personalInfo[language].title}</p>
+
+                  {/* Contact Info */}
+                  <div className="space-y-3 text-sm text-gray-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      {personalInfo[language].location}
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      ahmed.faiz@example.com
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      +249 123 456 789
+                    </div>
+                  </div>
+
+                  {/* Social Links */}
+                  <div className="flex justify-center gap-4 mt-6">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-white/20 text-white hover:bg-white/10 bg-transparent"
+                    >
+                      <Github className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-white/20 text-white hover:bg-white/10 bg-transparent"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  {/* Download CV */}
+                  <Button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+                    <Download className="w-4 h-4 mr-2" />
+                    {language === "ar" ? "تحميل السيرة الذاتية" : "Download CV"}
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Bio & Stats */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-2 space-y-6"
+            >
+              {/* Bio */}
+              <Card className="bg-white/5 backdrop-blur-lg border-white/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    {language === "ar" ? "نبذة عني" : "About Me"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-300 leading-relaxed text-lg">{personalInfo[language].bio}</p>
+                </CardContent>
+              </Card>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Card className="bg-white/5 backdrop-blur-lg border-white/10 text-center p-4">
+                  <div className="text-2xl font-bold text-blue-400 mb-1">3+</div>
+                  <div className="text-sm text-gray-400">{language === "ar" ? "سنوات خبرة" : "Years Experience"}</div>
+                </Card>
+                <Card className="bg-white/5 backdrop-blur-lg border-white/10 text-center p-4">
+                  <div className="text-2xl font-bold text-green-400 mb-1">15+</div>
+                  <div className="text-sm text-gray-400">
+                    {language === "ar" ? "مشروع مكتمل" : "Projects Completed"}
+                  </div>
+                </Card>
+                <Card className="bg-white/5 backdrop-blur-lg border-white/10 text-center p-4">
+                  <div className="text-2xl font-bold text-purple-400 mb-1">50+</div>
+                  <div className="text-sm text-gray-400">{language === "ar" ? "عميل راضي" : "Happy Clients"}</div>
+                </Card>
+                <Card className="bg-white/5 backdrop-blur-lg border-white/10 text-center p-4">
+                  <div className="text-2xl font-bold text-yellow-400 mb-1">24/7</div>
+                  <div className="text-sm text-gray-400">{language === "ar" ? "دعم متاح" : "Support Available"}</div>
+                </Card>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <Card className="bg-white/5 backdrop-blur-lg border-white/10">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Code2 className="w-5 h-5" />
+                {language === "ar" ? "المهارات التقنية" : "Technical Skills"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="space-y-2"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-white font-medium">{skill.name}</span>
+                      <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/20">
+                        {skill.category}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Progress value={skill.level} className="flex-1 h-2 bg-gray-700" />
+                      <span className="text-sm text-gray-400 min-w-[3rem]">{skill.level}%</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.section>
+
+        {/* Experience Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <Card className="bg-white/5 backdrop-blur-lg border-white/10">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Award className="w-5 h-5" />
+                {language === "ar" ? "الخبرة العملية" : "Work Experience"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {experience.map((exp, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.2 }}
+                    className="border-l-2 border-blue-500/30 pl-6 relative"
+                  >
+                    <div className="absolute -left-2 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <h3 className="text-lg font-semibold text-white">{exp.title[language]}</h3>
+                        <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">{exp.company}</Badge>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <Calendar className="w-4 h-4" />
+                        {exp.period}
+                      </div>
+                      <p className="text-gray-300">{exp.description[language]}</p>
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {exp.technologies.map((tech, techIndex) => (
+                          <Badge
+                            key={techIndex}
+                            variant="outline"
+                            className="text-xs bg-purple-500/10 text-purple-300 border-purple-500/20"
+                          >
+                            {tech}
                           </Badge>
                         ))}
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TabsContent>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.section>
 
-          <TabsContent value="education">
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
-              {education.map((edu, index) => (
-                <motion.div key={index} variants={itemVariants}>
-                  <Card className="bg-white/10 backdrop-blur-lg border-purple-500/20">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg">
-                          <GraduationCap className="w-6 h-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                            <h3 className="text-xl font-bold text-white">{edu.degree}</h3>
-                            <Badge variant="secondary" className="bg-purple-600/20 text-purple-300 w-fit">
-                              {edu.period}
-                            </Badge>
-                          </div>
-                          <p className="text-purple-300 font-medium mb-2">{edu.school}</p>
-                          <p className="text-gray-300 mb-2">{edu.description}</p>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-400">{language === "ar" ? "التقدير:" : "Grade:"}</span>
-                            <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white">
-                              {edu.grade}
-                            </Badge>
-                          </div>
-                        </div>
+        {/* Education & Certifications */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Education */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <Card className="bg-white/5 backdrop-blur-lg border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <BookOpen className="w-5 h-5" />
+                  {language === "ar" ? "التعليم" : "Education"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {education.map((edu, index) => (
+                  <div key={index} className="space-y-3">
+                    <h3 className="text-lg font-semibold text-white">{edu.degree[language]}</h3>
+                    <p className="text-blue-400">{edu.school[language]}</p>
+                    <div className="flex items-center justify-between text-sm text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {edu.period}
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TabsContent>
+                      <Badge className="bg-green-500/20 text-green-300 border-green-500/30">GPA: {edu.gpa}</Badge>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          <TabsContent value="achievements">
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {achievements.map((achievement, index) => (
-                <motion.div key={index} variants={itemVariants}>
-                  <Card className="bg-white/10 backdrop-blur-lg border-purple-500/20 h-full hover:bg-white/15 transition-all duration-300">
-                    <CardContent className="p-6 text-center">
-                      <div className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full w-fit mx-auto mb-4">
-                        <achievement.icon className="w-8 h-8 text-white" />
+          {/* Certifications */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <Card className="bg-white/5 backdrop-blur-lg border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Award className="w-5 h-5" />
+                  {language === "ar" ? "الشهادات" : "Certifications"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {certifications.map((cert, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-start justify-between p-3 rounded-lg bg-white/5 border border-white/10"
+                    >
+                      <div className="space-y-1">
+                        <h4 className="font-medium text-white">{cert.name}</h4>
+                        <p className="text-sm text-gray-400">{cert.issuer}</p>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2">{achievement.title}</h3>
-                      <p className="text-gray-300 text-sm mb-3 leading-relaxed">{achievement.description}</p>
-                      <Badge variant="secondary" className="bg-purple-600/20 text-purple-300">
-                        {achievement.year}
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-yellow-500/10 text-yellow-300 border-yellow-500/20"
+                      >
+                        {cert.date}
                       </Badge>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TabsContent>
-        </Tabs>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
     </div>
   )
