@@ -19,7 +19,7 @@ interface NavItem {
   id: string
 }
 
-export function FloatingNavbar() {
+export default function FloatingNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
@@ -225,3 +225,5 @@ export function FloatingNavbar() {
     </>
   )
 }
+
+export { FloatingNavbar }
